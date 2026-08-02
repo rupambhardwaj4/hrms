@@ -3,7 +3,7 @@
 // 1. Unified Company Branding Configuration
 const companyConfig = {
     name: 'QT Consultancy',
-    legal_name: 'QT Consultancy (Opc) Private Limited',
+    legal_name: 'QT Consultancy Private Limited',
     logo_initials: 'QT',
     gstin: '09AABCQ0892L1Z0',
     cin: 'U78100UP2025OPC218928',
