@@ -256,21 +256,16 @@ def get_block_content(html, block_name):
 dashboard_content = get_block_content(dashboard_html, 'content')
 dashboard_extra_js = get_block_content(dashboard_html, 'extra_js')
 
-# Insert data definitions into the dashboard extra JS block
-dashboard_data_injection = f"""
+# Clean out the unrendered script block with the Django template loops
+dashboard_extra_js_cleaned = re.sub(r'<!-- Render chart script injection -->\s*<script>.*?</script>', '', dashboard_extra_js, flags=re.DOTALL)
+
+# Combine static data injection with the modular script source tags
+dashboard_extra_js_block = f"""
 <script>
     const serverClients = {json.dumps(DEFAULT_CLIENTS, indent=4)};
     const serverInvoices = {json.dumps(DEFAULT_INVOICES, indent=4)};
 </script>
-"""
-dashboard_extra_js = dashboard_extra_js.replace('<!-- Render chart script injection -->', '')
-dashboard_extra_js = dashboard_extra_js.replace('<script>', '').replace('</script>', '')
-# Re-wrap in script tag
-dashboard_extra_js_block = f"""
-{dashboard_data_injection}
-<script>
-{dashboard_extra_js}
-</script>
+{dashboard_extra_js_cleaned}
 """
 
 # Assemble dashboard using base template
@@ -292,21 +287,16 @@ with open('dist/index.html', 'w', encoding='utf-8') as f:
 invoice_content = get_block_content(invoice_html, 'content')
 invoice_extra_js = get_block_content(invoice_html, 'extra_js')
 
-# Insert data definitions into invoice extra JS block
-invoice_data_injection = f"""
+# Clean out the unrendered script block with the Django template loops
+invoice_extra_js_cleaned = re.sub(r'<!-- Client-side configurations list definition script -->\s*<script>.*?</script>', '', invoice_extra_js, flags=re.DOTALL)
+
+# Combine static data injection with the modular script source tags
+invoice_extra_js_block = f"""
 <script>
     const clientList = {json.dumps(DEFAULT_CLIENTS, indent=4)};
     const serverInvoices = {json.dumps(DEFAULT_INVOICES, indent=4)};
 </script>
-"""
-invoice_extra_js = invoice_extra_js.replace('<!-- Client-side configurations list definition script -->', '')
-invoice_extra_js = invoice_extra_js.replace('<script>', '').replace('</script>', '')
-# Re-wrap in script tag
-invoice_extra_js_block = f"""
-{invoice_data_injection}
-<script>
-{invoice_extra_js}
-</script>
+{invoice_extra_js_cleaned}
 """
 
 invoice_compiled = base_html.replace('{% block title %}QT Consultancy{% endblock %}', 'Invoices - QT Consultancy')

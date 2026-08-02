@@ -457,7 +457,6 @@
     <script src="static/js/main.js"></script>
     <script src="static/js/utils.js"></script>
     
-
 <script>
     const serverClients = [
     {
@@ -638,80 +637,11 @@
     }
 ];
 </script>
-
-<script>
 <!-- Modular dashboard and charts js -->
-<script src="static/js/charts.js">
-<script src="static/js/dashboard.js">
+<script src="static/js/charts.js"></script>
+<script src="static/js/dashboard.js"></script>
 
 
-
-    // Ingest seed data for clients and invoices if local storage is uninitialized
-    const serverClients = [
-        {% for c in clients %}
-        {
-            id: "{{ c.id }}",
-            name: "{{ c.name }}",
-            address: "{{ c.address|escapejs }}",
-            gstin: "{{ c.gstin }}",
-            state: "{{ c.state|escapejs }}",
-            state_code: "{{ c.state_code }}"
-        },
-        {% endfor %}
-    ];
-
-    const serverInvoices = [
-        {% for inv in invoices %}
-        {
-            id: "{{ inv.id }}",
-            invoice_number: "{{ inv.invoice_number }}",
-            invoice_date: "{{ inv.invoice_date }}",
-            client_id: "{{ inv.client_id }}",
-            client_name: "{{ inv.client_name|escapejs }}",
-            client_address: "{{ inv.client_address|escapejs }}",
-            client_gstin: "{{ inv.client_gstin }}",
-            client_state: "{{ inv.client_state|escapejs }}",
-            client_state_code: "{{ inv.client_state_code }}",
-            supply_state: "{{ inv.supply_state|escapejs }}",
-            topic_label: "{{ inv.topic_label|escapejs }}",
-            topic_value: "{{ inv.topic_value|escapejs }}",
-            account_name: "{{ inv.account_name|escapejs }}",
-            account_no: "{{ inv.account_no }}",
-            ifsc_code: "{{ inv.ifsc_code }}",
-            bank_name: "{{ inv.bank_name|escapejs }}",
-            branch_name: "{{ inv.branch_name|escapejs }}",
-            signatory_name: "{{ inv.signatory_name|escapejs }}",
-            status: "{{ inv.status }}",
-            items: [
-                {% for item in inv.items %}
-                {
-                    name: "{{ item.name|escapejs }}",
-                    qty: {{ item.qty }},
-                    unit: "{{ item.unit|escapejs }}",
-                    rate: {{ item.rate }},
-                    igst_rate: {{ item.igst_rate }}
-                },
-                {% endfor %}
-            ],
-            total_amount: {{ inv.total_amount }},
-            tax_type: "{{ inv.tax_type|default:'IGST' }}",
-            gst_rate: {{ inv.gst_rate|default:18 }},
-            cgst_rate: {{ inv.cgst_rate|default:0 }},
-            sgst_rate: {{ inv.sgst_rate|default:0 }},
-            igst_rate: {{ inv.igst_rate|default:18 }},
-            cgst_amount: {{ inv.cgst_amount|default:0 }},
-            sgst_amount: {{ inv.sgst_amount|default:0 }},
-            igst_amount: {{ inv.igst_amount|default:0 }},
-            total_tax: {{ inv.total_tax|default:0 }},
-            taxable_amount: {{ inv.taxable_amount|default:0 }},
-            grand_total: {{ inv.grand_total|default:0 }},
-            seller_state: "{{ inv.seller_state|default:'Uttar Pradesh'|escapejs }}",
-            buyer_state: "{{ inv.buyer_state|default:''|escapejs }}"
-        },
-        {% endfor %}
-    ];
-
-</script>
 
 </body>
 </html>
