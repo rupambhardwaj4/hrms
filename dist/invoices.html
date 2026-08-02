@@ -63,12 +63,12 @@
             <!-- Navigation items -->
             <ul class="flex flex-col gap-1.5 list-none p-0 m-0">
                 <li class="rounded-xl overflow-hidden">
-                    <a href="index.html" class="flex items-center gap-3.5 px-4.5 py-3 text-slate-300 hover:text-white hover:bg-slate-850/50 rounded-xl font-semibold text-sm transition-all duration-150 {% if false %}bg-brand-blue/90 text-white shadow-md shadow-blue-500/10{% endif %}">
+                    <a href="index.html" class="flex items-center gap-3.5 px-4.5 py-3 text-slate-300 hover:text-white hover:bg-slate-850/50 rounded-xl font-semibold text-sm transition-all duration-150 bg-brand-blue/90 text-white shadow-md shadow-blue-500/10">
                         <span class="text-base">📊</span> Dashboard
                     </a>
                 </li>
                 <li class="rounded-xl overflow-hidden">
-                    <a href="invoices.html" class="flex items-center gap-3.5 px-4.5 py-3 text-slate-300 hover:text-white hover:bg-slate-850/50 rounded-xl font-semibold text-sm transition-all duration-150 {% if true %}bg-brand-blue/90 text-white shadow-md shadow-blue-500/10{% endif %}">
+                    <a href="invoices.html" class="flex items-center gap-3.5 px-4.5 py-3 text-slate-300 hover:text-white hover:bg-slate-850/50 rounded-xl font-semibold text-sm transition-all duration-150 bg-brand-blue/90 text-white shadow-md shadow-blue-500/10">
                         <span class="text-base">📄</span> Invoices
                     </a>
                 </li>
@@ -138,7 +138,7 @@
             <p class="text-xs text-slate-400 font-semibold mt-1">Search, duplicate, edit, and print tax invoices.</p>
         </div>
         
-        <button onclick="openNewInvoiceCompiler('{{ next_invoice_number }}')" class="py-2.5 px-5 bg-brand-dark hover:bg-brand-darker text-white rounded-2xl font-bold text-xs sm:text-sm flex items-center gap-2 shadow-lg shadow-brand-dark/10 transition-all cursor-pointer">
+        <button onclick="openNewInvoiceCompiler('')" class="py-2.5 px-5 bg-brand-dark hover:bg-brand-darker text-white rounded-2xl font-bold text-xs sm:text-sm flex items-center gap-2 shadow-lg shadow-brand-dark/10 transition-all cursor-pointer">
             <span>+</span> Compile New Invoice
         </button>
     </div>
@@ -195,40 +195,40 @@
                 </thead>
                 <tbody id="invoices-list-table-body" class="divide-y divide-slate-100 dark:divide-slate-900 font-medium text-slate-700 dark:text-slate-350">
                     <!-- Loaded dynamically via loop & JS search -->
-                    {% for inv in invoices %}
-                    <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-900/40 cursor-pointer transition-colors" onclick="loadInvoiceInCompiler('{{ inv.id }}')" data-inv-id="{{ inv.id }}" data-num="{{ inv.invoice_number }}" data-client="{{ inv.client_name }}" data-date="{{ inv.invoice_date }}" data-status="{{ inv.status }}" data-amount="{{ inv.total_amount }}">
-                        <td class="py-4 font-sans font-bold text-slate-900 dark:text-white">{{ inv.invoice_number }}</td>
-                        <td class="py-4 font-bold">{{ inv.client_name }}</td>
-                        <td class="py-4 text-slate-400">{{ inv.invoice_date }}</td>
+                    
+                    <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-900/40 cursor-pointer transition-colors" onclick="loadInvoiceInCompiler('')" data-inv-id="" data-num="" data-client="" data-date="" data-status="" data-amount="">
+                        <td class="py-4 font-sans font-bold text-slate-900 dark:text-white"></td>
+                        <td class="py-4 font-bold"></td>
+                        <td class="py-4 text-slate-400"></td>
                         <td class="py-4">
-                            {% if inv.status == 'PAID' %}
+                            
                             <span class="bg-emerald-50 dark:bg-emerald-950/20 text-emerald-600 border border-emerald-250 dark:border-emerald-800/40 text-[0.62rem] font-bold px-2 py-0.5 rounded-md uppercase tracking-wider">🟢 PAID</span>
-                            {% elif inv.status == 'PENDING' %}
+                            
                             <span class="bg-amber-50 dark:bg-amber-950/20 text-amber-500 border border-amber-250 dark:border-amber-800/40 text-[0.62rem] font-bold px-2 py-0.5 rounded-md uppercase tracking-wider">🟡 PENDING</span>
-                            {% else %}
+                            
                             <span class="bg-slate-100 dark:bg-slate-800 text-slate-500 border border-slate-200 dark:border-slate-700 text-[0.62rem] font-bold px-2 py-0.5 rounded-md uppercase tracking-wider">⚪ DRAFT</span>
-                            {% endif %}
+                            
                         </td>
-                        <td class="py-4 text-right pr-6 font-sans font-bold text-slate-900 dark:text-white">₹ {{ inv.total_amount|floatformat:2 }}</td>
+                        <td class="py-4 text-right pr-6 font-sans font-bold text-slate-900 dark:text-white">₹ </td>
                         <td class="py-4">
                             <div class="flex items-center justify-center gap-2">
-                                <button onclick="event.stopPropagation(); loadInvoiceInCompiler('{{ inv.id }}')" class="py-1.5 px-3 bg-slate-100 dark:bg-slate-800 hover:bg-brand-blue hover:text-white rounded-lg text-xs font-bold transition-all flex items-center gap-1 cursor-pointer">
+                                <button onclick="event.stopPropagation(); loadInvoiceInCompiler('')" class="py-1.5 px-3 bg-slate-100 dark:bg-slate-800 hover:bg-brand-blue hover:text-white rounded-lg text-xs font-bold transition-all flex items-center gap-1 cursor-pointer">
                                     📝 Edit
                                 </button>
-                                <button onclick="event.stopPropagation(); duplicateInvoice('{{ inv.id }}')" class="py-1.5 px-3 bg-slate-100 dark:bg-slate-800 hover:bg-brand-orange hover:text-white rounded-lg text-xs font-bold transition-all flex items-center gap-1 cursor-pointer">
+                                <button onclick="event.stopPropagation(); duplicateInvoice('')" class="py-1.5 px-3 bg-slate-100 dark:bg-slate-800 hover:bg-brand-orange hover:text-white rounded-lg text-xs font-bold transition-all flex items-center gap-1 cursor-pointer">
                                     📋 Clone
                                 </button>
-                                <button onclick="event.stopPropagation(); deleteInvoice('{{ inv.id }}', '{{ inv.invoice_number }}')" class="py-1.5 px-3 bg-slate-50 dark:bg-slate-900 hover:bg-rose-600 hover:text-white text-rose-500 rounded-lg text-xs font-bold transition-all flex items-center gap-1 cursor-pointer">
+                                <button onclick="event.stopPropagation(); deleteInvoice('', '')" class="py-1.5 px-3 bg-slate-50 dark:bg-slate-900 hover:bg-rose-600 hover:text-white text-rose-500 rounded-lg text-xs font-bold transition-all flex items-center gap-1 cursor-pointer">
                                     🗑️ Delete
                                 </button>
                             </div>
                         </td>
                     </tr>
-                    {% empty %}
+                    
                     <tr>
                         <td colspan="6" class="py-8 text-center text-slate-400 font-bold">No Invoices Run found in session. Click "Compile New Invoice" above to start.</td>
                     </tr>
-                    {% endfor %}
+                    
                 </tbody>
             </table>
         </div>
@@ -261,9 +261,9 @@
                 <label for="client-select" class="text-[0.62rem] text-slate-400 font-bold uppercase tracking-widest">1. Select Registered Client</label>
                 <select id="client-select" class="w-full px-3 py-2.5 border dark:border-slate-800 rounded-xl focus:outline-none focus:border-brand-blue bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-200 font-bold">
                     <option value="">-- Choose Client --</option>
-                    {% for c in clients %}
-                    <option value="{{ c.id }}">{{ c.name }}</option>
-                    {% endfor %}
+                    
+                    <option value=""></option>
+                    
                 </select>
             </div>
 
@@ -788,69 +788,69 @@
 <script>
     // Ingest default client list to allow Javascript matching
     const clientList = [
-        {% for c in clients %}
+        
         {
-            id: "{{ c.id }}",
-            name: "{{ c.name }}",
-            address: "{{ c.address|escapejs }}",
-            gstin: "{{ c.gstin }}",
-            state: "{{ c.state }}",
-            state_code: "{{ c.state_code }}"
+            id: "",
+            name: "",
+            address: "",
+            gstin: "",
+            state: "",
+            state_code: ""
         },
-        {% endfor %}
+        
     ];
 
     // Ingest default invoice list to allow Javascript matching and seeding
     const serverInvoices = [
-        {% for inv in invoices %}
+        
         {
-            id: "{{ inv.id }}",
-            invoice_number: "{{ inv.invoice_number }}",
-            invoice_date: "{{ inv.invoice_date }}",
-            client_id: "{{ inv.client_id }}",
-            client_name: "{{ inv.client_name|escapejs }}",
-            client_address: "{{ inv.client_address|escapejs }}",
-            client_gstin: "{{ inv.client_gstin }}",
-            client_state: "{{ inv.client_state|escapejs }}",
-            client_state_code: "{{ inv.client_state_code }}",
-            supply_state: "{{ inv.supply_state|escapejs }}",
-            topic_label: "{{ inv.topic_label|escapejs }}",
-            topic_value: "{{ inv.topic_value|escapejs }}",
-            account_name: "{{ inv.account_name|escapejs }}",
-            account_no: "{{ inv.account_no }}",
-            ifsc_code: "{{ inv.ifsc_code }}",
-            bank_name: "{{ inv.bank_name|escapejs }}",
-            branch_name: "{{ inv.branch_name|escapejs }}",
-            signatory_name: "{{ inv.signatory_name|escapejs }}",
-            status: "{{ inv.status }}",
+            id: "",
+            invoice_number: "",
+            invoice_date: "",
+            client_id: "",
+            client_name: "",
+            client_address: "",
+            client_gstin: "",
+            client_state: "",
+            client_state_code: "",
+            supply_state: "",
+            topic_label: "",
+            topic_value: "",
+            account_name: "",
+            account_no: "",
+            ifsc_code: "",
+            bank_name: "",
+            branch_name: "",
+            signatory_name: "",
+            status: "",
             items: [
-                {% for item in inv.items %}
+                
                 {
-                    name: "{{ item.name|escapejs }}",
-                    qty: {{ item.qty }},
-                    unit: "{{ item.unit|escapejs }}",
-                    rate: {{ item.rate }},
-                    igst_rate: {{ item.igst_rate }}
+                    name: "",
+                    qty: ,
+                    unit: "",
+                    rate: ,
+                    igst_rate: 
                 },
-                {% endfor %}
+                
             ],
-            total_amount: {{ inv.total_amount }},
-            tax_type: "{{ inv.tax_type|default:'IGST' }}",
-            gst_rate: {{ inv.gst_rate|default:18 }},
-            cgst_rate: {{ inv.cgst_rate|default:0 }},
-            sgst_rate: {{ inv.sgst_rate|default:0 }},
-            igst_rate: {{ inv.igst_rate|default:18 }},
-            cgst_amount: {{ inv.cgst_amount|default:0 }},
-            sgst_amount: {{ inv.sgst_amount|default:0 }},
-            igst_amount: {{ inv.igst_amount|default:0 }},
-            total_tax: {{ inv.total_tax|default:0 }},
-            taxable_amount: {{ inv.taxable_amount|default:0 }},
-            grand_total: {{ inv.grand_total|default:0 }},
-            seller_state: "{{ inv.seller_state|default:'Uttar Pradesh'|escapejs }}",
-            buyer_state: "{{ inv.buyer_state|default:''|escapejs }}",
-            show_stamp: "{{ inv.show_stamp|default:'NO' }}"
+            total_amount: ,
+            tax_type: "",
+            gst_rate: ,
+            cgst_rate: ,
+            sgst_rate: ,
+            igst_rate: ,
+            cgst_amount: ,
+            sgst_amount: ,
+            igst_amount: ,
+            total_tax: ,
+            taxable_amount: ,
+            grand_total: ,
+            seller_state: "",
+            buyer_state: "",
+            show_stamp: ""
         },
-        {% endfor %}
+        
     ];
 </script>
         </main>

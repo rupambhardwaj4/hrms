@@ -63,12 +63,12 @@
             <!-- Navigation items -->
             <ul class="flex flex-col gap-1.5 list-none p-0 m-0">
                 <li class="rounded-xl overflow-hidden">
-                    <a href="index.html" class="flex items-center gap-3.5 px-4.5 py-3 text-slate-300 hover:text-white hover:bg-slate-850/50 rounded-xl font-semibold text-sm transition-all duration-150 {% if true %}bg-brand-blue/90 text-white shadow-md shadow-blue-500/10{% endif %}">
+                    <a href="index.html" class="flex items-center gap-3.5 px-4.5 py-3 text-slate-300 hover:text-white hover:bg-slate-850/50 rounded-xl font-semibold text-sm transition-all duration-150 bg-brand-blue/90 text-white shadow-md shadow-blue-500/10">
                         <span class="text-base">📊</span> Dashboard
                     </a>
                 </li>
                 <li class="rounded-xl overflow-hidden">
-                    <a href="invoices.html" class="flex items-center gap-3.5 px-4.5 py-3 text-slate-300 hover:text-white hover:bg-slate-850/50 rounded-xl font-semibold text-sm transition-all duration-150 {% if false %}bg-brand-blue/90 text-white shadow-md shadow-blue-500/10{% endif %}">
+                    <a href="invoices.html" class="flex items-center gap-3.5 px-4.5 py-3 text-slate-300 hover:text-white hover:bg-slate-850/50 rounded-xl font-semibold text-sm transition-all duration-150 bg-brand-blue/90 text-white shadow-md shadow-blue-500/10">
                         <span class="text-base">📄</span> Invoices
                     </a>
                 </li>
@@ -137,7 +137,7 @@
             Your Trusted Recruitment & Payroll Partner. QT Consultancy is dedicated to providing reliable manpower solutions across India.
         </p>
         <div class="pt-2 text-[0.72rem] font-bold uppercase tracking-wider text-brand-orange">
-            🎯 Mission: {{ company.mission }}
+            🎯 Mission: 
         </div>
     </div>
 </div>
@@ -181,7 +181,7 @@
     <div class="premium-card p-5 sm:p-6 rounded-2xl relative overflow-hidden group">
         <div class="absolute top-0 right-0 w-24 h-24 bg-brand-blue/5 rounded-full translate-x-8 -translate-y-8 group-hover:scale-110 transition-transform"></div>
         <span class="text-[0.62rem] sm:text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest block mb-2">Total Clients</span>
-        <span id="metric-total-clients" class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white leading-none block dashboard-metric-value skeleton-shimmer">{{ total_clients }}</span>
+        <span id="metric-total-clients" class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white leading-none block dashboard-metric-value skeleton-shimmer"></span>
         <span class="text-[0.68rem] font-bold text-emerald-500 mt-2 block flex items-center gap-1">↑ Active Accounts</span>
     </div>
     
@@ -189,7 +189,7 @@
     <div class="premium-card p-5 sm:p-6 rounded-2xl relative overflow-hidden group">
         <div class="absolute top-0 right-0 w-24 h-24 bg-brand-orange/5 rounded-full translate-x-8 -translate-y-8 group-hover:scale-110 transition-transform"></div>
         <span class="text-[0.62rem] sm:text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest block mb-2">Total Invoices</span>
-        <span id="metric-total-invoices" class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white leading-none block dashboard-metric-value skeleton-shimmer">{{ total_invoices }}</span>
+        <span id="metric-total-invoices" class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white leading-none block dashboard-metric-value skeleton-shimmer"></span>
         <span class="text-[0.68rem] font-bold text-slate-400 dark:text-slate-500 mt-2 block">System Total</span>
     </div>
 
@@ -197,7 +197,7 @@
     <div class="premium-card p-5 sm:p-6 rounded-2xl relative overflow-hidden group">
         <div class="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-full translate-x-8 -translate-y-8 group-hover:scale-110 transition-transform"></div>
         <span class="text-[0.62rem] sm:text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest block mb-2">Paid Invoices</span>
-        <span id="metric-paid-invoices" class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white leading-none block dashboard-metric-value skeleton-shimmer">{{ paid_invoices }}</span>
+        <span id="metric-paid-invoices" class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white leading-none block dashboard-metric-value skeleton-shimmer"></span>
         <span class="text-[0.68rem] font-bold text-emerald-500 mt-2 block">Cleared Ledger</span>
     </div>
 
@@ -205,28 +205,28 @@
     <div class="premium-card p-5 sm:p-6 rounded-2xl relative overflow-hidden group">
         <div class="absolute top-0 right-0 w-24 h-24 bg-amber-500/5 rounded-full translate-x-8 -translate-y-8 group-hover:scale-110 transition-transform"></div>
         <span class="text-[0.62rem] sm:text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest block mb-2">Pending Invoices</span>
-        <span id="metric-pending-invoices" class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white leading-none block dashboard-metric-value skeleton-shimmer">{{ pending_invoices }}</span>
+        <span id="metric-pending-invoices" class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white leading-none block dashboard-metric-value skeleton-shimmer"></span>
         <span class="text-[0.68rem] font-bold text-amber-500 mt-2 block">Awaiting Payout</span>
     </div>
 
     <!-- Stat 5: Monthly Revenue -->
     <div class="premium-card p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-white to-blue-50/20 dark:from-slate-950 dark:to-slate-900 relative overflow-hidden group col-span-2">
         <span class="text-[0.62rem] sm:text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest block mb-2">Monthly Revenue (June)</span>
-        <span id="metric-monthly-revenue" class="text-2xl sm:text-3xl font-black text-brand-blue leading-none block dashboard-metric-value skeleton-shimmer">₹ {{ monthly_revenue|floatformat:2 }}</span>
+        <span id="metric-monthly-revenue" class="text-2xl sm:text-3xl font-black text-brand-blue leading-none block dashboard-metric-value skeleton-shimmer">₹ </span>
         <span class="text-[0.68rem] font-bold text-emerald-500 mt-2 block">↑ Current Cycle</span>
     </div>
 
     <!-- Stat 6: Annual Revenue -->
     <div class="premium-card p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-white to-orange-50/20 dark:from-slate-950 dark:to-slate-900 relative overflow-hidden group col-span-2">
         <span class="text-[0.62rem] sm:text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest block mb-2">Annual Revenue</span>
-        <span id="metric-annual-revenue" class="text-2xl sm:text-3xl font-black text-brand-orange leading-none block dashboard-metric-value skeleton-shimmer">₹ {{ annual_revenue|floatformat:2 }}</span>
+        <span id="metric-annual-revenue" class="text-2xl sm:text-3xl font-black text-brand-orange leading-none block dashboard-metric-value skeleton-shimmer">₹ </span>
         <span class="text-[0.68rem] font-bold text-emerald-500 mt-2 block">↑ FY 2026-27</span>
     </div>
 
     <!-- Stat 7: Outstanding Amount -->
     <div class="premium-card p-5 sm:p-6 rounded-2xl relative overflow-hidden group col-span-2">
         <span class="text-[0.62rem] sm:text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest block mb-2">Outstanding Receivables</span>
-        <span id="metric-outstanding-receivables" class="text-2xl sm:text-3xl font-black text-rose-500 leading-none block dashboard-metric-value skeleton-shimmer">₹ {{ outstanding_amount|floatformat:2 }}</span>
+        <span id="metric-outstanding-receivables" class="text-2xl sm:text-3xl font-black text-rose-500 leading-none block dashboard-metric-value skeleton-shimmer">₹ </span>
         <span class="text-[0.68rem] font-bold text-rose-500 mt-2 block flex items-center gap-1">⚠ Action Needed</span>
     </div>
 
@@ -234,7 +234,7 @@
     <div class="premium-card p-5 sm:p-6 rounded-2xl relative overflow-hidden group col-span-2">
         <span class="text-[0.62rem] sm:text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest block mb-2">Latest Invoice Serial</span>
         <span id="metric-latest-invoice" class="text-lg sm:text-xl font-black text-slate-800 dark:text-white leading-none block dashboard-metric-value skeleton-shimmer">
-            {% if latest_invoice %}{{ latest_invoice.invoice_number }} [{{ latest_invoice.client_name|slice:":12" }}...]{% else %}No Invoices{% endif %}
+             [...]No Invoices
         </span>
         <span class="text-[0.68rem] font-bold text-slate-400 dark:text-slate-500 mt-2.5 block">Most recent invoice run</span>
     </div>

@@ -239,6 +239,10 @@ def clean_django_syntax(html, is_login=False):
     html = html.replace('{{ error }}', '')
     html = re.sub(r'{%\s*if\s+error\s*%}.*?{%\s*endif\s*%}', '', html, flags=re.DOTALL)
     
+    # Strip any leftover unrendered Django block tags or context variables
+    html = re.sub(r'{%.*?%}', '', html)
+    html = re.sub(r'{{.*?}}', '', html)
+    
     return html
 
 # 1. Compile Login Page
