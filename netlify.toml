@@ -1,4 +1,2 @@
 [build]
-  base = "."
-  command = "python export_static.py"
   publish = "dist"

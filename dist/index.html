@@ -1,0 +1,717 @@
+
+<!DOCTYPE html>
+<html lang="en" class="transition-all-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - QT Consultancy - HR & Invoice System</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                orange: '#88BDF2',
+                blue: '#6A89A7',
+                dark: '#384959',
+                darker: '#24303b'
+              }
+            },
+            fontFamily: {
+              sans: ['sans-serif'],
+              handwritten: ['sans-serif'],
+              mono: ['sans-serif']
+            }
+          }
+        }
+      }
+    </script>
+    
+    <!-- CSS stylesheets -->
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="static/css/print.css" media="print">
+    
+    
+
+    <script>
+        if (!sessionStorage.getItem('authenticated')) {
+            window.location.href = 'login.html';
+        }
+    </script>
+        </head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 font-sans min-h-screen flex transition-all-smooth">
+
+    <!-- Sidebar component -->
+    <aside id="sidebar-navigation" class="w-64 bg-brand-dark dark:bg-slate-950 text-white flex flex-col justify-between p-6 flex-shrink-0 z-50 fixed md:sticky top-0 h-screen transition-transform duration-300 transform -translate-x-full md:translate-x-0 print:hidden">
+        <div>
+            <!-- Brand logo -->
+            <div class="flex items-center justify-between mb-8 border-b border-brand-darker dark:border-slate-800 pb-5">
+                <div class="flex items-center gap-3">
+                    <img src="static/images/qt_logo.jpg" alt="Logo" class="w-9 h-9 object-cover rounded-xl shadow-lg shadow-blue-500/20">
+                    <div class="flex flex-col">
+                        <span class="text-white font-bold text-sm leading-none tracking-tight" data-brand="name">QT Consultancy</span>
+                        <span class="text-[0.62rem] text-slate-400 font-semibold tracking-widest mt-1">INVOICING HUB</span>
+                    </div>
+                </div>
+                <button id="sidebar-close-btn" class="md:hidden text-slate-400 hover:text-white p-1" aria-label="Close Sidebar">✕</button>
+            </div>
+            
+            <!-- Navigation items -->
+            <ul class="flex flex-col gap-1.5 list-none p-0 m-0">
+                <li class="rounded-xl overflow-hidden">
+                    <a href="index.html" class="flex items-center gap-3.5 px-4.5 py-3 text-slate-300 hover:text-white hover:bg-slate-850/50 rounded-xl font-semibold text-sm transition-all duration-150 {% if true %}bg-brand-blue/90 text-white shadow-md shadow-blue-500/10{% endif %}">
+                        <span class="text-base">📊</span> Dashboard
+                    </a>
+                </li>
+                <li class="rounded-xl overflow-hidden">
+                    <a href="invoices.html" class="flex items-center gap-3.5 px-4.5 py-3 text-slate-300 hover:text-white hover:bg-slate-850/50 rounded-xl font-semibold text-sm transition-all duration-150 {% if false %}bg-brand-blue/90 text-white shadow-md shadow-blue-500/10{% endif %}">
+                        <span class="text-base">📄</span> Invoices
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- Sidebar Bottom Footer -->
+        <div class="border-t border-brand-darker dark:border-slate-800 pt-5 flex flex-col gap-4">
+            <!-- Theme Toggle -->
+            <div class="flex items-center justify-between bg-brand-darker/50 dark:bg-slate-900/60 p-2.5 rounded-xl border border-white/5 dark:border-slate-800">
+                <span class="text-xs text-slate-400 font-semibold">Dark Mode</span>
+                <button id="theme-toggle-btn" class="w-8 h-8 rounded-lg bg-slate-850 dark:bg-slate-800 hover:bg-brand-blue dark:hover:bg-brand-blue text-white flex items-center justify-center transition-colors focus:outline-none">
+                    🌓
+                </button>
+            </div>
+
+            <!-- Profile Info -->
+            <div class="flex items-center gap-3 px-1">
+                <div class="w-9 h-9 rounded-full bg-brand-orange text-white font-extrabold text-sm flex items-center justify-center shadow-lg shadow-orange-500/20">
+                    AD
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-xs font-bold text-white leading-none">Aakash Giri</span>
+                    <span class="text-[0.62rem] text-slate-400 font-semibold tracking-wider mt-1.5 uppercase">ADMINISTRATOR</span>
+                </div>
+            </div>
+            
+            <a href="login.html" class="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-red-650/10 hover:bg-red-600 border border-red-900/30 hover:border-red-600 text-red-400 hover:text-white font-bold text-xs tracking-wider transition-all duration-200">
+                <span>🚪</span> Sign Out
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content Frame -->
+    <div class="flex-1 flex flex-col min-h-screen overflow-x-hidden">
+        
+        <!-- Header Navbar -->
+        <header class="h-[75px] bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 px-6 md:px-8 flex items-center justify-between sticky top-0 z-30 print:hidden shadow-sm">
+            <div class="flex items-center">
+                <!-- Hamburger menu button -->
+                <button id="sidebar-hamburger" class="md:hidden p-2 mr-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-900 text-lg flex items-center justify-center text-slate-500 dark:text-slate-400 focus:outline-none">
+                    ☰
+                </button>
+                <div class="flex items-center gap-2.5">
+                    <img src="static/images/qt_logo.jpg" alt="Logo" class="w-7 h-7 object-cover rounded-lg shadow-md">
+                    <span class="text-xs sm:text-sm font-black text-slate-900 dark:text-white tracking-wide uppercase" data-brand="legal_name">QT Consultancy (Opc) Private Limited</span>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-4.5">
+                <div class="bg-blue-50 dark:bg-slate-900 border border-blue-100 dark:border-slate-800 px-4 py-1.5 rounded-full flex items-center gap-2">
+                    <span class="w-2 h-2 bg-brand-blue rounded-full animate-pulse"></span>
+                    <span id="navbar-clock" class="text-xs text-brand-blue dark:text-blue-400 font-bold font-sans">01/08/2026 | 22:00</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dynamic Page Workspace -->
+        <main class="p-6 md:p-8 flex-1 flex flex-col gap-6 print:p-0">
+            <!-- Hero Welcome Section -->
+<div class="bg-gradient-to-r from-brand-dark to-brand-blue rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden">
+    <div class="absolute w-80 h-80 rounded-full bg-white/5 blur-3xl -top-20 -right-20 pointer-events-none"></div>
+    <div class="relative z-10 space-y-2 max-w-xl">
+        <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Welcome back, Admin 👋</h2>
+        <p class="text-slate-200 text-xs sm:text-sm font-medium leading-relaxed" data-brand="description">
+            Your Trusted Recruitment & Payroll Partner. QT Consultancy is dedicated to providing reliable manpower solutions across India.
+        </p>
+        <div class="pt-2 text-[0.72rem] font-bold uppercase tracking-wider text-brand-orange">
+            🎯 Mission: {{ company.mission }}
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions Toolbar -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+    <a href="invoices.html" class="flex items-center gap-3.5 p-4 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-brand-blue shadow-sm hover:shadow-md transition-all duration-200 group">
+        <div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-slate-900 text-brand-blue flex items-center justify-center text-lg font-bold group-hover:scale-110 transition-transform">
+            ➕
+        </div>
+        <div class="flex flex-col">
+            <span class="text-xs sm:text-sm font-extrabold text-slate-850 dark:text-white">Generate Invoice</span>
+            <span class="text-[0.62rem] text-slate-400 font-semibold uppercase tracking-wider mt-0.5">Billing Workspace</span>
+        </div>
+    </a>
+    
+    <button id="btn-quick-client" class="flex items-center gap-3.5 p-4 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-brand-orange shadow-sm hover:shadow-md transition-all duration-200 text-left group focus:outline-none cursor-pointer">
+        <div class="w-10 h-10 rounded-xl bg-orange-50 dark:bg-slate-900 text-brand-orange flex items-center justify-center text-lg font-bold group-hover:scale-110 transition-transform">
+            👥
+        </div>
+        <div class="flex flex-col">
+            <span class="text-xs sm:text-sm font-extrabold text-slate-850 dark:text-white">Create Client</span>
+            <span class="text-[0.62rem] text-slate-400 font-semibold uppercase tracking-wider mt-0.5">Quick Registry</span>
+        </div>
+    </button>
+    
+    <button onclick="downloadDashboardReport()" class="flex items-center gap-3.5 p-4 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-emerald-500 shadow-sm hover:shadow-md transition-all duration-200 text-left group focus:outline-none cursor-pointer">
+        <div class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-slate-900 text-emerald-600 flex items-center justify-center text-lg font-bold group-hover:scale-110 transition-transform">
+            📥
+        </div>
+        <div class="flex flex-col">
+            <span class="text-xs sm:text-sm font-extrabold text-slate-850 dark:text-white">Download Reports</span>
+            <span class="text-[0.62rem] text-slate-400 font-semibold uppercase tracking-wider mt-0.5">Export Ledger CSV</span>
+        </div>
+    </button>
+</div>
+
+<!-- Metrics Statistics Grid -->
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+    <!-- Stat 1: Total Clients -->
+    <div class="premium-card p-5 sm:p-6 rounded-2xl relative overflow-hidden group">
+        <div class="absolute top-0 right-0 w-24 h-24 bg-brand-blue/5 rounded-full translate-x-8 -translate-y-8 group-hover:scale-110 transition-transform"></div>
+        <span class="text-[0.62rem] sm:text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest block mb-2">Total Clients</span>
+        <span id="metric-total-clients" class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white leading-none block dashboard-metric-value skeleton-shimmer">{{ total_clients }}</span>
+        <span class="text-[0.68rem] font-bold text-emerald-500 mt-2 block flex items-center gap-1">↑ Active Accounts</span>
+    </div>
+    
+    <!-- Stat 2: Total Invoices -->
+    <div class="premium-card p-5 sm:p-6 rounded-2xl relative overflow-hidden group">
+        <div class="absolute top-0 right-0 w-24 h-24 bg-brand-orange/5 rounded-full translate-x-8 -translate-y-8 group-hover:scale-110 transition-transform"></div>
+        <span class="text-[0.62rem] sm:text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest block mb-2">Total Invoices</span>
+        <span id="metric-total-invoices" class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white leading-none block dashboard-metric-value skeleton-shimmer">{{ total_invoices }}</span>
+        <span class="text-[0.68rem] font-bold text-slate-400 dark:text-slate-500 mt-2 block">System Total</span>
+    </div>
+
+    <!-- Stat 3: Paid Invoices -->
+    <div class="premium-card p-5 sm:p-6 rounded-2xl relative overflow-hidden group">
+        <div class="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-full translate-x-8 -translate-y-8 group-hover:scale-110 transition-transform"></div>
+        <span class="text-[0.62rem] sm:text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest block mb-2">Paid Invoices</span>
+        <span id="metric-paid-invoices" class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white leading-none block dashboard-metric-value skeleton-shimmer">{{ paid_invoices }}</span>
+        <span class="text-[0.68rem] font-bold text-emerald-500 mt-2 block">Cleared Ledger</span>
+    </div>
+
+    <!-- Stat 4: Pending Invoices -->
+    <div class="premium-card p-5 sm:p-6 rounded-2xl relative overflow-hidden group">
+        <div class="absolute top-0 right-0 w-24 h-24 bg-amber-500/5 rounded-full translate-x-8 -translate-y-8 group-hover:scale-110 transition-transform"></div>
+        <span class="text-[0.62rem] sm:text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest block mb-2">Pending Invoices</span>
+        <span id="metric-pending-invoices" class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white leading-none block dashboard-metric-value skeleton-shimmer">{{ pending_invoices }}</span>
+        <span class="text-[0.68rem] font-bold text-amber-500 mt-2 block">Awaiting Payout</span>
+    </div>
+
+    <!-- Stat 5: Monthly Revenue -->
+    <div class="premium-card p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-white to-blue-50/20 dark:from-slate-950 dark:to-slate-900 relative overflow-hidden group col-span-2">
+        <span class="text-[0.62rem] sm:text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest block mb-2">Monthly Revenue (June)</span>
+        <span id="metric-monthly-revenue" class="text-2xl sm:text-3xl font-black text-brand-blue leading-none block dashboard-metric-value skeleton-shimmer">₹ {{ monthly_revenue|floatformat:2 }}</span>
+        <span class="text-[0.68rem] font-bold text-emerald-500 mt-2 block">↑ Current Cycle</span>
+    </div>
+
+    <!-- Stat 6: Annual Revenue -->
+    <div class="premium-card p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-white to-orange-50/20 dark:from-slate-950 dark:to-slate-900 relative overflow-hidden group col-span-2">
+        <span class="text-[0.62rem] sm:text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest block mb-2">Annual Revenue</span>
+        <span id="metric-annual-revenue" class="text-2xl sm:text-3xl font-black text-brand-orange leading-none block dashboard-metric-value skeleton-shimmer">₹ {{ annual_revenue|floatformat:2 }}</span>
+        <span class="text-[0.68rem] font-bold text-emerald-500 mt-2 block">↑ FY 2026-27</span>
+    </div>
+
+    <!-- Stat 7: Outstanding Amount -->
+    <div class="premium-card p-5 sm:p-6 rounded-2xl relative overflow-hidden group col-span-2">
+        <span class="text-[0.62rem] sm:text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest block mb-2">Outstanding Receivables</span>
+        <span id="metric-outstanding-receivables" class="text-2xl sm:text-3xl font-black text-rose-500 leading-none block dashboard-metric-value skeleton-shimmer">₹ {{ outstanding_amount|floatformat:2 }}</span>
+        <span class="text-[0.68rem] font-bold text-rose-500 mt-2 block flex items-center gap-1">⚠ Action Needed</span>
+    </div>
+
+    <!-- Stat 8: Latest Invoice -->
+    <div class="premium-card p-5 sm:p-6 rounded-2xl relative overflow-hidden group col-span-2">
+        <span class="text-[0.62rem] sm:text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest block mb-2">Latest Invoice Serial</span>
+        <span id="metric-latest-invoice" class="text-lg sm:text-xl font-black text-slate-800 dark:text-white leading-none block dashboard-metric-value skeleton-shimmer">
+            {% if latest_invoice %}{{ latest_invoice.invoice_number }} [{{ latest_invoice.client_name|slice:":12" }}...]{% else %}No Invoices{% endif %}
+        </span>
+        <span class="text-[0.68rem] font-bold text-slate-400 dark:text-slate-500 mt-2.5 block">Most recent invoice run</span>
+    </div>
+</div>
+
+<!-- GST & Detailed Revenue Metrics -->
+<h3 class="text-xs font-extrabold uppercase tracking-widest text-slate-400 dark:text-slate-500 mt-6 mb-2">📊 GST & Revenue Analytics</h3>
+<div class="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+    <!-- Card 1: Total GST Collected -->
+    <div class="premium-card p-5 sm:p-6 rounded-2xl relative overflow-hidden group">
+        <div class="absolute top-0 right-0 w-24 h-24 bg-brand-blue/5 rounded-full translate-x-8 -translate-y-8 group-hover:scale-110 transition-transform"></div>
+        <span class="text-[0.62rem] sm:text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest block mb-2">Total GST Collected</span>
+        <span id="metric-total-gst" class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white leading-none block dashboard-metric-value skeleton-shimmer">₹ 0.00</span>
+        <span class="text-[0.68rem] font-bold text-slate-400 dark:text-slate-500 mt-2 block">CGST + SGST + IGST</span>
+    </div>
+    
+    <!-- Card 2: CGST / SGST split -->
+    <div class="premium-card p-5 sm:p-6 rounded-2xl relative overflow-hidden group">
+        <div class="absolute top-0 right-0 w-24 h-24 bg-brand-blue/5 rounded-full translate-x-8 -translate-y-8 group-hover:scale-110 transition-transform"></div>
+        <span class="text-[0.62rem] sm:text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest block mb-2">Intrastate (CGST / SGST)</span>
+        <span id="metric-total-cgst-sgst" class="text-[1.1rem] sm:text-[1.3rem] font-black text-slate-900 dark:text-white leading-none block dashboard-metric-value skeleton-shimmer">₹ 0.00 / ₹ 0.00</span>
+        <span class="text-[0.68rem] font-bold text-slate-400 dark:text-slate-500 mt-2 block">Total CGST / Total SGST</span>
+    </div>
+
+    <!-- Card 3: IGST -->
+    <div class="premium-card p-5 sm:p-6 rounded-2xl relative overflow-hidden group">
+        <div class="absolute top-0 right-0 w-24 h-24 bg-brand-blue/5 rounded-full translate-x-8 -translate-y-8 group-hover:scale-110 transition-transform"></div>
+        <span class="text-[0.62rem] sm:text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest block mb-2">Interstate (IGST)</span>
+        <span id="metric-total-igst" class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white leading-none block dashboard-metric-value skeleton-shimmer">₹ 0.00</span>
+        <span class="text-[0.68rem] font-bold text-slate-400 dark:text-slate-500 mt-2 block">Total IGST Collected</span>
+    </div>
+
+    <!-- Card 4: Taxable Revenue -->
+    <div class="premium-card p-5 sm:p-6 rounded-2xl relative overflow-hidden group">
+        <div class="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-full translate-x-8 -translate-y-8 group-hover:scale-110 transition-transform"></div>
+        <span class="text-[0.62rem] sm:text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest block mb-2">Taxable Net Revenue</span>
+        <span id="metric-taxable-revenue" class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white leading-none block dashboard-metric-value skeleton-shimmer">₹ 0.00</span>
+        <span class="text-[0.68rem] font-bold text-emerald-500 mt-2 block">Paid net services</span>
+    </div>
+
+    <!-- Card 5: Non-Taxable Revenue -->
+    <div class="premium-card p-5 sm:p-6 rounded-2xl relative overflow-hidden group">
+        <div class="absolute top-0 right-0 w-24 h-24 bg-brand-orange/5 rounded-full translate-x-8 -translate-y-8 group-hover:scale-110 transition-transform"></div>
+        <span class="text-[0.62rem] sm:text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest block mb-2">Non-Taxable Revenue</span>
+        <span id="metric-nontaxable-revenue" class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white leading-none block dashboard-metric-value skeleton-shimmer">₹ 0.00</span>
+        <span class="text-[0.68rem] font-bold text-slate-450 mt-2 block">Exempt / zero-rated sales</span>
+    </div>
+</div>
+
+<!-- Graphs and Data Table split Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
+    
+    <!-- Chart 1 & 2 Card -->
+    <div class="lg:col-span-2 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 sm:p-6 shadow-sm space-y-6">
+        <div>
+            <h3 class="text-sm font-extrabold text-slate-900 dark:text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+                📈 Monthly Earnings & Invoice Trends
+            </h3>
+            <div class="relative h-[250px] w-full">
+                <canvas id="monthly-revenue-chart"></canvas>
+            </div>
+        </div>
+        <div class="border-t border-slate-100 dark:border-slate-900 pt-6">
+            <h3 class="text-sm font-extrabold text-slate-900 dark:text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+                📊 Invoices Output Count
+            </h3>
+            <div class="relative h-[200px] w-full">
+                <canvas id="invoices-count-chart"></canvas>
+            </div>
+        </div>
+        <div class="border-t border-slate-100 dark:border-slate-900 pt-6">
+            <h3 class="text-sm font-extrabold text-slate-900 dark:text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+                📊 GST Collections Breakdown (CGST, SGST, IGST)
+            </h3>
+            <div class="relative h-[200px] w-full">
+                <canvas id="gst-collections-chart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Status Breakdown Pie Chart and Recent lists -->
+    <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 sm:p-6 shadow-sm space-y-6">
+        <div>
+            <h3 class="text-sm font-extrabold text-slate-900 dark:text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+                🟢 Payment Clearances Division
+            </h3>
+            <div class="relative h-[220px] w-full">
+                <canvas id="payment-status-chart"></canvas>
+            </div>
+        </div>
+        
+        <div class="border-t border-slate-100 dark:border-slate-900 pt-6">
+            <h4 class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-4 block">🏆 Top Billed Accounts</h4>
+            <ul id="top-billed-accounts-list" class="space-y-2.5 p-0 list-none text-xs font-semibold text-slate-650 dark:text-slate-350">
+                <!-- Rendered dynamically from localStorage -->
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+<!-- Recent Invoices list -->
+<div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm">
+    <div class="flex justify-between items-center mb-5 pb-4 border-b border-slate-100 dark:border-slate-900">
+        <h3 class="text-sm font-extrabold text-slate-900 dark:text-white uppercase tracking-wider">
+            📄 Recent Tax Invoices Run
+        </h3>
+        <a href="invoices.html" class="text-xs text-brand-blue hover:text-brand-orange font-bold uppercase tracking-wider">View All →</a>
+    </div>
+
+    <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse text-xs sm:text-sm">
+            <thead>
+                <tr class="border-b border-slate-100 dark:border-slate-900 text-slate-400 font-bold uppercase text-[0.68rem] tracking-wider">
+                    <th class="pb-3.5">Invoice Code</th>
+                    <th class="pb-3.5">Client Account</th>
+                    <th class="pb-3.5">Posting Date</th>
+                    <th class="pb-3.5">Status</th>
+                    <th class="pb-3.5 text-right pr-6">Amount (₹)</th>
+                    <th class="pb-3.5 text-center">Operation</th>
+                </tr>
+            </thead>
+            <tbody id="recent-invoices-tbody" class="divide-y divide-slate-100 dark:divide-slate-900 font-medium">
+                <!-- Rendered dynamically from localStorage -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- CLIENT CREATION POPUP MODAL -->
+<div id="create-client-modal" class="fixed inset-0 z-[1000] hidden items-center justify-center bg-brand-dark/40 backdrop-blur-sm p-4">
+    <div class="w-full max-w-[450px] bg-white dark:bg-slate-950 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl p-6 sm:p-8 space-y-4">
+        <div class="flex justify-between items-center border-b dark:border-slate-900 pb-3">
+            <h3 class="text-sm font-black uppercase tracking-wider text-brand-dark dark:text-white">👤 Add Client to Registry</h3>
+            <button onclick="closeCreateClientModal()" class="text-slate-400 hover:text-rose-500 font-bold focus:outline-none">✕</button>
+        </div>
+
+        <div class="space-y-3.5 text-xs text-slate-650 dark:text-slate-300 font-semibold">
+            <div class="flex flex-col gap-1">
+                <label class="text-[0.62rem] text-slate-400 font-bold uppercase tracking-wider">Client Legal Name</label>
+                <input type="text" id="client-name-inp" placeholder="e.g. Zepto Technologies" class="w-full px-3 py-2.5 border dark:border-slate-800 rounded-xl focus:outline-none focus:border-brand-blue bg-slate-50 dark:bg-slate-900">
+            </div>
+            
+            <div class="flex flex-col gap-1">
+                <label class="text-[0.62rem] text-slate-400 font-bold uppercase tracking-wider">Office Address</label>
+                <textarea id="client-address-inp" rows="2" placeholder="Street name, City, State, Zip" class="w-full px-3 py-2.5 border dark:border-slate-800 rounded-xl focus:outline-none focus:border-brand-blue bg-slate-50 dark:bg-slate-900"></textarea>
+            </div>
+            
+            <div class="flex flex-col gap-1">
+                <label class="text-[0.62rem] text-slate-400 font-bold uppercase tracking-wider">GSTIN</label>
+                <input type="text" id="client-gstin-inp" placeholder="e.g. 27AAECK9928A1Z5" class="w-full px-3 py-2.5 border dark:border-slate-800 rounded-xl focus:outline-none focus:border-brand-blue bg-slate-50 dark:bg-slate-900 font-sans">
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+                <div class="flex flex-col gap-1">
+                    <label class="text-[0.62rem] text-slate-400 font-bold uppercase tracking-wider">Billing State</label>
+                    <select id="client-state-inp" class="w-full px-3 py-2.5 border dark:border-slate-800 rounded-xl focus:outline-none focus:border-brand-blue bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-200">
+                        <option value="">-- Choose State --</option>
+                        <option value="Jammu and Kashmir">01: Jammu and Kashmir</option>
+                        <option value="Himachal Pradesh">02: Himachal Pradesh</option>
+                        <option value="Punjab">03: Punjab</option>
+                        <option value="Chandigarh">04: Chandigarh</option>
+                        <option value="Uttarakhand">05: Uttarakhand</option>
+                        <option value="Haryana">06: Haryana</option>
+                        <option value="Delhi">07: Delhi</option>
+                        <option value="Rajasthan">08: Rajasthan</option>
+                        <option value="Uttar Pradesh">09: Uttar Pradesh</option>
+                        <option value="Bihar">10: Bihar</option>
+                        <option value="Sikkim">11: Sikkim</option>
+                        <option value="Arunachal Pradesh">12: Arunachal Pradesh</option>
+                        <option value="Nagaland">13: Nagaland</option>
+                        <option value="Manipur">14: Manipur</option>
+                        <option value="Mizoram">15: Mizoram</option>
+                        <option value="Tripura">16: Tripura</option>
+                        <option value="Meghalaya">17: Meghalaya</option>
+                        <option value="Assam">18: Assam</option>
+                        <option value="West Bengal">19: West Bengal</option>
+                        <option value="Jharkhand">20: Jharkhand</option>
+                        <option value="Odisha">21: Odisha</option>
+                        <option value="Chhattisgarh">22: Chhattisgarh</option>
+                        <option value="Madhya Pradesh">23: Madhya Pradesh</option>
+                        <option value="Gujarat">24: Gujarat</option>
+                        <option value="Dadra and Nagar Haveli and Daman and Diu">26: Dadra and Nagar Haveli and Daman and Diu</option>
+                        <option value="Maharashtra">27: Maharashtra</option>
+                        <option value="Andhra Pradesh (former code)">28: Andhra Pradesh (former code)</option>
+                        <option value="Karnataka">29: Karnataka</option>
+                        <option value="Goa">30: Goa</option>
+                        <option value="Lakshadweep">31: Lakshadweep</option>
+                        <option value="Kerala">32: Kerala</option>
+                        <option value="Tamil Nadu">33: Tamil Nadu</option>
+                        <option value="Puducherry">34: Puducherry</option>
+                        <option value="Andaman and Nicobar Islands">35: Andaman and Nicobar Islands</option>
+                        <option value="Telangana">36: Telangana</option>
+                        <option value="Andhra Pradesh (new code)">37: Andhra Pradesh (new code)</option>
+                        <option value="Ladakh">38: Ladakh</option>
+                        <option value="Other Territory">97: Other Territory</option>
+                        <option value="Centre Jurisdiction">99: Centre Jurisdiction</option>
+                    </select>
+                </div>
+                <div class="flex flex-col gap-1">
+                    <label class="text-[0.62rem] text-slate-400 font-bold uppercase tracking-wider">State Code</label>
+                    <input type="text" id="client-statecode-inp" readonly placeholder="Auto" class="w-full px-3 py-2.5 border dark:border-slate-800 rounded-xl bg-slate-100 dark:bg-slate-950 font-sans cursor-not-allowed text-slate-500 font-bold">
+                </div>
+            </div>
+        </div>
+
+        <div class="border-t dark:border-slate-900 pt-4 flex gap-3">
+            <button onclick="closeCreateClientModal()" class="w-1/2 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-500 font-bold text-xs hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors">Cancel</button>
+            <button onclick="submitNewClientForm()" class="w-1/2 py-2.5 rounded-xl bg-brand-dark text-white font-bold text-xs hover:bg-brand-darker shadow-lg shadow-brand-dark/10 transition-colors">Create Client</button>
+        </div>
+    </div>
+</div>
+        </main>
+    </div>
+
+    <!-- Toast Notices container -->
+    <div id="toast-container" class="fixed bottom-6 right-6 z-[9999] flex flex-col gap-3 max-w-sm pointer-events-none"></div>
+
+    <!-- Javascript global configurations -->
+    <script src="static/js/main.js"></script>
+    <script src="static/js/utils.js"></script>
+    
+
+<script>
+    const serverClients = [
+    {
+        "id": "CL-1",
+        "name": "ElectricPe (Greenlight Mobility Pvt Ltd)",
+        "address": "Plot No-12-A, GR Flat No-264B-KH No-99/18 Late K L Vig Old New Delhi, West Delhi, Delhi, 110059",
+        "gstin": "07AACCW9615J1ZY",
+        "state": "Delhi",
+        "state_code": "07"
+    },
+    {
+        "id": "CL-2",
+        "name": "Zepto (Kiranakart Technologies Pvt Ltd)",
+        "address": "5th Floor, Equinox Business Park, Kurla West, Mumbai, Maharashtra 400070",
+        "gstin": "27AAECK9928A1Z5",
+        "state": "Maharashtra",
+        "state_code": "27"
+    },
+    {
+        "id": "CL-3",
+        "name": "Shadowfax Technologies Pvt Ltd",
+        "address": "1st Floor, Block B, Outer Ring Rd, Bellandur, Bengaluru, Karnataka 560103",
+        "gstin": "29AAGCS0293J1Z8",
+        "state": "Karnataka",
+        "state_code": "29"
+    },
+    {
+        "id": "CL-4",
+        "name": "Elasticrun (Nreach Online Services Pvt Ltd)",
+        "address": "Building A, 4th Floor, Cerebrum IT Park, Kalyani Nagar, Pune, Maharashtra 411014",
+        "gstin": "27AAFCN0931B1ZY",
+        "state": "Maharashtra",
+        "state_code": "27"
+    }
+];
+    const serverInvoices = [
+    {
+        "id": "INV-2026-0001",
+        "invoice_number": "QT-2026-0001",
+        "invoice_date": "2026-06-12",
+        "client_id": "CL-1",
+        "client_name": "ElectricPe (Greenlight Mobility Pvt Ltd)",
+        "client_address": "Plot No-12-A, GR Flat No-264B-KH No-99/18 Late K L Vig Old New Delhi, West Delhi, Delhi, 110059",
+        "client_gstin": "07AACCW9615J1ZY",
+        "client_state": "Delhi",
+        "client_state_code": "07",
+        "supply_state": "Delhi",
+        "topic_label": "Topic",
+        "topic_value": "Manpower & Deployment Charges - June 2026",
+        "account_name": "QT Consultancy Private Limited",
+        "account_no": "9250099086",
+        "ifsc_code": "KKBK0005047",
+        "bank_name": "KOTAK MAHINDRA BANK",
+        "branch_name": "SECTOR 12,NOIDA",
+        "signatory_name": "Aakash Giri",
+        "status": "PAID",
+        "items": [
+            {
+                "name": "Deployment of Delivery Executives (15 Staff)",
+                "qty": 15,
+                "unit": "Staff",
+                "rate": 12000.0,
+                "igst_rate": 18
+            },
+            {
+                "name": "Background Verification & Document Processing Fee",
+                "qty": 15,
+                "unit": "Services",
+                "rate": 500.0,
+                "igst_rate": 18
+            }
+        ],
+        "total_amount": 221250,
+        "tax_type": "IGST",
+        "gst_rate": 18,
+        "cgst_rate": 0,
+        "sgst_rate": 0,
+        "igst_rate": 18,
+        "cgst_amount": 0,
+        "sgst_amount": 0,
+        "igst_amount": 33750,
+        "total_tax": 33750,
+        "taxable_amount": 187500,
+        "grand_total": 221250,
+        "seller_state": "Uttar Pradesh",
+        "buyer_state": "Delhi",
+        "show_stamp": "NO"
+    },
+    {
+        "id": "INV-2026-0002",
+        "invoice_number": "QT-2026-0002",
+        "invoice_date": "2026-06-18",
+        "client_id": "CL-2",
+        "client_name": "Zepto (Kiranakart Technologies Pvt Ltd)",
+        "client_address": "5th Floor, Equinox Business Park, Kurla West, Mumbai, Maharashtra 400070",
+        "client_gstin": "27AAECK9928A1Z5",
+        "client_state": "Maharashtra",
+        "client_state_code": "27",
+        "supply_state": "Maharashtra",
+        "topic_label": "Topic",
+        "topic_value": "Warehouse Support Services - June 2026",
+        "account_name": "QT Consultancy Private Limited",
+        "account_no": "9250099086",
+        "ifsc_code": "KKBK0005047",
+        "bank_name": "KOTAK MAHINDRA BANK",
+        "branch_name": "SECTOR 12,NOIDA",
+        "signatory_name": "Aakash Giri",
+        "status": "PENDING",
+        "items": [
+            {
+                "name": "Warehouse Pickers/Packers Staffing Services (30 staff)",
+                "qty": 30,
+                "unit": "Staff",
+                "rate": 14000.0,
+                "igst_rate": 18
+            }
+        ],
+        "total_amount": 495600,
+        "tax_type": "IGST",
+        "gst_rate": 18,
+        "cgst_rate": 0,
+        "sgst_rate": 0,
+        "igst_rate": 18,
+        "cgst_amount": 0,
+        "sgst_amount": 0,
+        "igst_amount": 75600,
+        "total_tax": 75600,
+        "taxable_amount": 420000,
+        "grand_total": 495600,
+        "seller_state": "Uttar Pradesh",
+        "buyer_state": "Maharashtra",
+        "show_stamp": "NO"
+    },
+    {
+        "id": "INV-2026-0003",
+        "invoice_number": "QT-2026-0003",
+        "invoice_date": "2026-07-02",
+        "client_id": "CL-3",
+        "client_name": "Shadowfax Technologies Pvt Ltd",
+        "client_address": "1st Floor, Block B, Outer Ring Rd, Bellandur, Bengaluru, Karnataka 560103",
+        "client_gstin": "29AAGCS0293J1Z8",
+        "client_state": "Karnataka",
+        "client_state_code": "29",
+        "supply_state": "Karnataka",
+        "topic_label": "Topic",
+        "topic_value": "Bulk Delivery Fleet Hiring Charges",
+        "account_name": "QT Consultancy Private Limited",
+        "account_no": "9250099086",
+        "ifsc_code": "KKBK0005047",
+        "bank_name": "KOTAK MAHINDRA BANK",
+        "branch_name": "SECTOR 12,NOIDA",
+        "signatory_name": "Aakash Giri",
+        "status": "DRAFT",
+        "items": [
+            {
+                "name": "Consultancy Fee for Bulk Fleet Recruitment",
+                "qty": 1,
+                "unit": "Service",
+                "rate": 75000.0,
+                "igst_rate": 18
+            }
+        ],
+        "total_amount": 88500,
+        "tax_type": "IGST",
+        "gst_rate": 18,
+        "cgst_rate": 0,
+        "sgst_rate": 0,
+        "igst_rate": 18,
+        "cgst_amount": 0,
+        "sgst_amount": 0,
+        "igst_amount": 13500,
+        "total_tax": 13500,
+        "taxable_amount": 75000,
+        "grand_total": 88500,
+        "seller_state": "Uttar Pradesh",
+        "buyer_state": "Karnataka",
+        "show_stamp": "NO"
+    }
+];
+</script>
+
+<script>
+<!-- Modular dashboard and charts js -->
+<script src="static/js/charts.js">
+<script src="static/js/dashboard.js">
+
+
+
+    // Ingest seed data for clients and invoices if local storage is uninitialized
+    const serverClients = [
+        {% for c in clients %}
+        {
+            id: "{{ c.id }}",
+            name: "{{ c.name }}",
+            address: "{{ c.address|escapejs }}",
+            gstin: "{{ c.gstin }}",
+            state: "{{ c.state|escapejs }}",
+            state_code: "{{ c.state_code }}"
+        },
+        {% endfor %}
+    ];
+
+    const serverInvoices = [
+        {% for inv in invoices %}
+        {
+            id: "{{ inv.id }}",
+            invoice_number: "{{ inv.invoice_number }}",
+            invoice_date: "{{ inv.invoice_date }}",
+            client_id: "{{ inv.client_id }}",
+            client_name: "{{ inv.client_name|escapejs }}",
+            client_address: "{{ inv.client_address|escapejs }}",
+            client_gstin: "{{ inv.client_gstin }}",
+            client_state: "{{ inv.client_state|escapejs }}",
+            client_state_code: "{{ inv.client_state_code }}",
+            supply_state: "{{ inv.supply_state|escapejs }}",
+            topic_label: "{{ inv.topic_label|escapejs }}",
+            topic_value: "{{ inv.topic_value|escapejs }}",
+            account_name: "{{ inv.account_name|escapejs }}",
+            account_no: "{{ inv.account_no }}",
+            ifsc_code: "{{ inv.ifsc_code }}",
+            bank_name: "{{ inv.bank_name|escapejs }}",
+            branch_name: "{{ inv.branch_name|escapejs }}",
+            signatory_name: "{{ inv.signatory_name|escapejs }}",
+            status: "{{ inv.status }}",
+            items: [
+                {% for item in inv.items %}
+                {
+                    name: "{{ item.name|escapejs }}",
+                    qty: {{ item.qty }},
+                    unit: "{{ item.unit|escapejs }}",
+                    rate: {{ item.rate }},
+                    igst_rate: {{ item.igst_rate }}
+                },
+                {% endfor %}
+            ],
+            total_amount: {{ inv.total_amount }},
+            tax_type: "{{ inv.tax_type|default:'IGST' }}",
+            gst_rate: {{ inv.gst_rate|default:18 }},
+            cgst_rate: {{ inv.cgst_rate|default:0 }},
+            sgst_rate: {{ inv.sgst_rate|default:0 }},
+            igst_rate: {{ inv.igst_rate|default:18 }},
+            cgst_amount: {{ inv.cgst_amount|default:0 }},
+            sgst_amount: {{ inv.sgst_amount|default:0 }},
+            igst_amount: {{ inv.igst_amount|default:0 }},
+            total_tax: {{ inv.total_tax|default:0 }},
+            taxable_amount: {{ inv.taxable_amount|default:0 }},
+            grand_total: {{ inv.grand_total|default:0 }},
+            seller_state: "{{ inv.seller_state|default:'Uttar Pradesh'|escapejs }}",
+            buyer_state: "{{ inv.buyer_state|default:''|escapejs }}"
+        },
+        {% endfor %}
+    ];
+
+</script>
+
+</body>
+</html>
