@@ -120,6 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Bind all parameter form fields
     const formFields = [
+        { id: 'inp-invoice-number', key: 'invoice_number' },
         { id: 'inp-invoice-date', key: 'invoice_date' },
         { id: 'inp-supply-state', key: 'supply_state' },
         { id: 'inp-topic-label', key: 'topic_label' },
@@ -904,6 +905,7 @@ function openEditor(inv) {
     invoiceState = JSON.parse(JSON.stringify(inv)); // Deep clone
     
     // Fill all editor fields
+    document.getElementById('inp-invoice-number').value = invoiceState.invoice_number || '';
     document.getElementById('inp-invoice-date').value = invoiceState.invoice_date;
     document.getElementById('inp-supply-state').value = invoiceState.supply_state;
     document.getElementById('inp-topic-label').value = invoiceState.topic_label;
@@ -1009,6 +1011,7 @@ function openNewInvoiceCompiler(nextNumber) {
     };
 
     // Reset inputs
+    document.getElementById('inp-invoice-number').value = invoiceState.invoice_number || '';
     document.getElementById('inp-invoice-date').value = invoiceState.invoice_date;
     document.getElementById('inp-supply-state').value = invoiceState.supply_state;
     document.getElementById('inp-topic-label').value = invoiceState.topic_label;
