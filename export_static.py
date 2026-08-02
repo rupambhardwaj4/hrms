@@ -210,22 +210,6 @@ with open('app/templates/login.html', 'r', encoding='utf-8') as f:
     login_html = f.read()
 
 def clean_django_syntax(html, is_login=False):
-    # Remove load static
-    html = re.sub(r'{%\s*load\s+.*?%}', '', html)
-    # Replace static urls
-    html = re.sub(r'{%\s*static\s+[\'"](.*?)[\'"]\s*%}', r'static/\1', html)
-    # Replace links
-    html = re.sub(r'href="{%s*url\s+[\'"]dashboard[\'"]\s*%}"', 'href="index.html"', html)
-    html = re.sub(r'href="{%s*url\s+[\'"]invoices[\'"]\s*%}"', 'href="invoices.html"', html)
-    html = re.sub(r'href="{%s*url\s+[\'"]logout[\'"]\s*%}"', 'href="login.html" onclick="sessionStorage.removeItem(\'authenticated\');"', html)
-    html = re.sub(r'href="{%s*url\s+[\'"]login[\'"]\s*%}"', 'href="login.html"', html)
-    # Replace CSRF token
-    html = re.sub(r'{%\s*csrf_token\s*%}', '', html)
-    # Replace context variables
-    html = html.replace('{{ admin_name }}', 'Aakash Giri')
-    html = html.replace('{{ error }}', '')
-    html = re.sub(r'{%\s*if\s+error\s*%}.*?{%\s*endif\s*%}', '', html, flags=re.DOTALL)
-    
     # Inject client-side authentication lock
     if not is_login:
         auth_check = """
@@ -236,6 +220,24 @@ def clean_django_syntax(html, is_login=False):
     </script>
         """
         html = html.replace('</head>', f'{auth_check}</head>')
+
+    # Remove load static
+    html = re.sub(r'{%\s*load\s+.*?%}', '', html)
+    # Replace static urls
+    html = re.sub(r'{%\s*static\s+[\'"](.*?)[\'"]\s*%}', r'static/\1', html)
+    
+    # Replace links and URLs globally
+    html = html.replace("{% url 'dashboard' %}", "index.html")
+    html = html.replace("{% url 'invoices' %}", "invoices.html")
+    html = html.replace("{% url 'logout' %}", "login.html")
+    html = html.replace("{% url 'login' %}", "login.html")
+    
+    # Replace CSRF token
+    html = re.sub(r'{%\s*csrf_token\s*%}', '', html)
+    # Replace context variables
+    html = html.replace('{{ admin_name }}', 'Aakash Giri')
+    html = html.replace('{{ error }}', '')
+    html = re.sub(r'{%\s*if\s+error\s*%}.*?{%\s*endif\s*%}', '', html, flags=re.DOTALL)
     
     return html
 
