@@ -1,0 +1,111 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - QT Consultancy HRMS</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+             colors: {
+              brand: {
+                orange: '#88BDF2',
+                blue: '#6A89A7',
+                dark: '#384959',
+                darker: '#24303b'
+              }
+            },
+            fontFamily: {
+              sans: ['sans-serif'],
+              mono: ['sans-serif']
+            }
+          }
+        }
+      }
+    </script>
+    
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="bg-gradient-to-tr from-[#384959] via-[#6A89A7] to-[#BDDDFC] min-h-screen flex items-center justify-center p-4 font-sans relative overflow-hidden">
+
+    <!-- Atmospheric blur decorative background circles -->
+    <div class="absolute w-[450px] h-[450px] rounded-full bg-brand-blue/15 blur-[120px] -top-20 -left-20"></div>
+    <div class="absolute w-[450px] h-[450px] rounded-full bg-brand-orange/15 blur-[120px] -bottom-20 -right-20"></div>
+
+    <!-- Login card wrapper -->
+    <div class="w-full max-w-[450px] bg-white/70 backdrop-blur-xl border border-white/50 shadow-2xl rounded-3xl p-8 sm:p-10 transition-all duration-300 transform hover:scale-[1.01] relative z-10">
+        
+        <!-- Logo and headers -->
+        <div class="flex flex-col items-center text-center mb-8">
+            <img src="{% static 'images/qt_logo.jpg' %}" alt="Logo" class="w-14 h-14 object-cover rounded-2xl shadow-xl shadow-brand-blue/20 mb-4 transform hover:rotate-6 transition-transform">
+            <h1 class="text-2xl font-extrabold text-brand-dark tracking-tight">QT Consultancy</h1>
+            <p class="text-xs text-slate-500 font-semibold uppercase tracking-widest mt-1.5">Enterprise Portal</p>
+        </div>
+
+        {% if error %}
+        <!-- Validation error alerts -->
+        <div class="mb-5 p-4 rounded-2xl bg-rose-50 border border-rose-100 text-rose-600 text-xs sm:text-sm font-semibold flex items-center gap-2.5">
+            <span>❌</span>
+            <span>{{ error }}</span>
+        </div>
+        {% endif %}
+
+        <!-- Authorization Form -->
+        <form id="login-form" method="POST" action="{% url 'login' %}" class="space-y-5">
+            {% csrf_token %}
+            
+            <div class="flex flex-col gap-1.5">
+                <label for="email" class="text-xs font-bold text-slate-500 uppercase tracking-wider">Email Address</label>
+                <div class="relative">
+                    <input type="email" id="email" name="email" placeholder="admin@company.com" required
+                           class="w-full px-4.5 py-3.5 text-sm rounded-2xl border border-slate-200 focus:outline-none focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/15 bg-white/80 transition-all font-medium">
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-1.5">
+                <label for="password" class="text-xs font-bold text-slate-500 uppercase tracking-wider">Account Password</label>
+                <div class="relative">
+                    <input type="password" id="password" name="password" placeholder="••••••••" required
+                           class="w-full px-4.5 py-3.5 text-sm rounded-2xl border border-slate-200 focus:outline-none focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/15 bg-white/80 transition-all font-medium">
+                </div>
+            </div>
+
+            <!-- Credentials Hint Card -->
+            <div class="p-3.5 bg-slate-50 border border-slate-150 rounded-2xl text-[0.72rem] leading-normal text-slate-500 font-semibold space-y-1">
+                <div class="text-[0.65rem] text-brand-blue font-bold uppercase tracking-wider mb-1">💡 Default admin credentials:</div>
+                <div class="flex justify-between">
+                    <span>Email:</span>
+                    <span class="font-sans text-slate-800">admin@company.com</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>Password:</span>
+                    <span class="font-sans text-slate-800">admin123</span>
+                </div>
+            </div>
+
+            <button type="submit" id="submit-btn" 
+                    class="w-full py-4 bg-brand-dark hover:bg-brand-darker text-white rounded-2xl font-bold text-sm shadow-xl shadow-brand-dark/15 hover:shadow-brand-dark/25 transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer">
+                <span id="btn-text">Authenticate Credentials</span>
+                <!-- Loading Spinner element -->
+                <svg id="btn-spinner" class="animate-spin h-4 w-4 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+            </button>
+        </form>
+
+        <div class="mt-8 text-center text-[0.68rem] text-slate-400 font-bold uppercase tracking-widest border-t border-slate-200/50 pt-5">
+            Secured Corporate Connection
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/auth.js' %}"></script>
+</body>
+</html>

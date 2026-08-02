@@ -1,0 +1,61 @@
+# Django database
+db.sqlite3
+*.db
+
+# Python Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+ENV/local/
+ENV/shared/
+
+# IDEs and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+.project
+.pydevproject
+
+# Environment variables & secrets
+.env
+.env.*
+local_settings.py
+
+# System-specific files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# AI Agents cache / workdirs
+.gemini/
+.antigravity/
