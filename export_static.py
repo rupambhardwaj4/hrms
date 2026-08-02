@@ -335,4 +335,8 @@ auth_js_static = auth_js_content.replace(
 with open(dist_auth_path, 'w', encoding='utf-8') as f:
     f.write(auth_js_static)
 
+# 5. Write netlify.toml inside dist/ to allow subdirectory builds
+with open('dist/netlify.toml', 'w', encoding='utf-8') as f:
+    f.write('[build]\n  publish = "."\n')
+
 print("Static build successfully generated inside dist/ folder!")
