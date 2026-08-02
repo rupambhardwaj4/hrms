@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     btnSpinner.classList.remove('hidden');
                     submitBtn.classList.add('opacity-80', 'cursor-not-allowed');
                 }
+                e.preventDefault();
                 sessionStorage.setItem('authenticated', 'true');
                 window.location.href = 'index.html';
             } else {

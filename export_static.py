@@ -329,7 +329,7 @@ with open(dist_auth_path, 'r', encoding='utf-8') as f:
 
 auth_js_static = auth_js_content.replace(
     "// Allow form submission to Django view",
-    "sessionStorage.setItem('authenticated', 'true');\n                window.location.href = 'index.html';"
+    "e.preventDefault();\n                sessionStorage.setItem('authenticated', 'true');\n                window.location.href = 'index.html';"
 )
 
 with open(dist_auth_path, 'w', encoding='utf-8') as f:
