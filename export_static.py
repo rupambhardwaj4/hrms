@@ -76,14 +76,14 @@ DEFAULT_INVOICES = [
             {
                 'name': 'Deployment of Delivery Executives (15 Staff)',
                 'qty': 15,
-                'unit': 'Staff',
+                'unit': '9985',
                 'rate': 12000.00,
                 'igst_rate': 18
             },
             {
                 'name': 'Background Verification & Document Processing Fee',
                 'qty': 15,
-                'unit': 'Services',
+                'unit': '9985',
                 'rate': 500.00,
                 'igst_rate': 18
             }
@@ -128,7 +128,7 @@ DEFAULT_INVOICES = [
             {
                 'name': 'Warehouse Pickers/Packers Staffing Services (30 staff)',
                 'qty': 30,
-                'unit': 'Staff',
+                'unit': '9985',
                 'rate': 14000.00,
                 'igst_rate': 18
             }
@@ -173,7 +173,7 @@ DEFAULT_INVOICES = [
             {
                 'name': 'Consultancy Fee for Bulk Fleet Recruitment',
                 'qty': 1,
-                'unit': 'Service',
+                'unit': '9985',
                 'rate': 75000.00,
                 'igst_rate': 18
             }

@@ -93,7 +93,7 @@ class InvoiceItem(models.Model):
     invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE, related_name='items')
     name = models.CharField(max_length=255)
     qty = models.IntegerField(default=1)
-    unit = models.CharField(max_length=50, default='Charge')
+    unit = models.CharField(max_length=50, default='9985', verbose_name='HSN')
     rate = models.DecimalField(max_digits=10, decimal_places=2)
     igst_rate = models.IntegerField(default=18, help_text="Integrated GST percentage")
 

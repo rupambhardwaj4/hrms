@@ -183,6 +183,14 @@ document.addEventListener('DOMContentLoaded', () => {
             inv.branch_name = 'SECTOR 12,NOIDA';
             migrated = true;
         }
+        if (inv.items && Array.isArray(inv.items)) {
+            inv.items.forEach(item => {
+                if (item.unit === 'Staff' || item.unit === 'Service' || item.unit === 'Services') {
+                    item.unit = '9985';
+                    migrated = true;
+                }
+            });
+        }
     });
     if (migrated) {
         localStorage.setItem('invoices', JSON.stringify(storedInvoices));

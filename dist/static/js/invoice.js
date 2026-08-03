@@ -63,7 +63,7 @@ let invoiceState = {
     signatory_name: 'Aakash Giri',
     status: 'PENDING',
     items: [
-        { name: 'Manpower Supply Services', qty: 1, unit: 'Staff', rate: 15000.00, igst_rate: 18 }
+        { name: 'Manpower Supply Services', qty: 1, unit: '9985', rate: 15000.00, igst_rate: 18 }
     ],
     // GST fields
     tax_type: 'IGST',
@@ -103,6 +103,14 @@ document.addEventListener('DOMContentLoaded', () => {
             inv.bank_name = 'KOTAK MAHINDRA BANK';
             inv.branch_name = 'SECTOR 12,NOIDA';
             migrated = true;
+        }
+        if (inv.items && Array.isArray(inv.items)) {
+            inv.items.forEach(item => {
+                if (item.unit === 'Staff' || item.unit === 'Service' || item.unit === 'Services') {
+                    item.unit = '9985';
+                    migrated = true;
+                }
+            });
         }
     });
     if (migrated) {
@@ -459,7 +467,7 @@ function renderItemRows() {
                     <input type="number" value="${item.qty}" oninput="updateItemField(${idx}, 'qty', this.value)" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-lg focus:outline-none focus:border-[#6A89A7] bg-white font-sans">
                 </div>
                 <div class="flex flex-col gap-1">
-                    <label class="text-[0.62rem] text-slate-400 font-bold uppercase tracking-wider">Unit</label>
+                    <label class="text-[0.62rem] text-slate-400 font-bold uppercase tracking-wider">HSN</label>
                     <input type="text" value="${item.unit}" oninput="updateItemField(${idx}, 'unit', this.value)" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-lg focus:outline-none focus:border-[#6A89A7] bg-white">
                 </div>
             </div>
@@ -478,7 +486,7 @@ function addNewItemRow() {
     invoiceState.items.push({
         name: 'Sales Support Services',
         qty: 1,
-        unit: 'Service',
+        unit: '9985',
         rate: 0.00,
         igst_rate: invoiceState.gst_rate
     });
@@ -569,7 +577,7 @@ function recalculateInvoice() {
                     <th rowspan="2" class="p-2 border-r border-black text-center">Sr. No.</th>
                     <th rowspan="2" class="p-2 border-r border-black">Description of Job / Service</th>
                     <th rowspan="2" class="p-2 border-r border-black text-center">QTY</th>
-                    <th rowspan="2" class="p-2 border-r border-black text-center">Unit</th>
+                    <th rowspan="2" class="p-2 border-r border-black text-center">HSN</th>
                     <th rowspan="2" class="p-2 border-r border-black text-right">Rate</th>
                     <th rowspan="2" id="prev-taxable-hdr" class="p-2 border-r border-black text-right bg-[#6A89A7] text-white font-extrabold">Taxable Value</th>
                     <th colspan="2" class="border-r border-black text-center py-0.5 font-extrabold">CGST</th>
@@ -601,7 +609,7 @@ function recalculateInvoice() {
                     <th rowspan="2" class="p-2 border-r border-black text-center">Sr. No.</th>
                     <th rowspan="2" class="p-2 border-r border-black">Description of Job / Service</th>
                     <th rowspan="2" class="p-2 border-r border-black text-center">QTY</th>
-                    <th rowspan="2" class="p-2 border-r border-black text-center">Unit</th>
+                    <th rowspan="2" class="p-2 border-r border-black text-center">HSN</th>
                     <th rowspan="2" class="p-2 border-r border-black text-right">Rate</th>
                     <th rowspan="2" id="prev-taxable-hdr" class="p-2 border-r border-black text-right bg-[#6A89A7] text-white font-extrabold">Taxable Value</th>
                     <th colspan="2" class="border-r border-black text-center py-0.5 font-extrabold">IGST</th>
@@ -628,7 +636,7 @@ function recalculateInvoice() {
                     <th class="p-2 border-r border-black text-center">Sr. No.</th>
                     <th class="p-2 border-r border-black">Description of Job / Service</th>
                     <th class="p-2 border-r border-black text-center">QTY</th>
-                    <th class="p-2 border-r border-black text-center">Unit</th>
+                    <th class="p-2 border-r border-black text-center">HSN</th>
                     <th class="p-2 border-r border-black text-right">Rate</th>
                     <th id="prev-taxable-hdr" class="p-2 border-r border-black text-right bg-[#6A89A7] text-white font-extrabold">Taxable Value</th>
                     <th class="p-2 text-right">Total</th>
@@ -992,7 +1000,7 @@ function openNewInvoiceCompiler(nextNumber) {
         signatory_name: 'Aakash Giri',
         status: 'PENDING',
         items: [
-            { name: 'Manpower Supply Services', qty: 1, unit: 'Staff', rate: 15000.00, igst_rate: 18 }
+            { name: 'Manpower Supply Services', qty: 1, unit: '9985', rate: 15000.00, igst_rate: 18 }
         ],
         tax_type: 'IGST',
         gst_rate: 18,
